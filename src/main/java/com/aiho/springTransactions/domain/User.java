@@ -1,6 +1,6 @@
 package com.aiho.springTransactions.domain;
 
-public class Users {
+public class User {
 
     private long id;
     private String firstName;
@@ -8,10 +8,10 @@ public class Users {
     private String email;
     private String password;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(long id, String firstName, String lastName, String email, String password) {
+    public User(long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

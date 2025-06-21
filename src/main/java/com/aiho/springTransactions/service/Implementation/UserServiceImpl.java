@@ -1,44 +1,55 @@
 package com.aiho.springTransactions.service.Implementation;
 
-import com.aiho.springTransactions.domain.Users;
+import com.aiho.springTransactions.domain.User;
 import com.aiho.springTransactions.payLoad.UserPayLoad;
+import com.aiho.springTransactions.repository.UserRepository;
 import com.aiho.springTransactions.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private List<Users> users;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(){
-        this.users = new ArrayList<>();
-
-        users.add(new Users(1L, "Ariho", "Seth", "arihoseth@gmail.com", "seth32"));
-        users.add(new Users(2L, "Ainom", "Ishma", "ainomishma@gmail.com", "Ishma32"));
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<Users> getAllUsers() {
-        return users;
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
-    public Users getUser(long userId) {
-        return users.stream().filter(u-> u.getId() == userId).findFirst().orElseThrow();
+    public User getUser(long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
-    public Users createUser(UserPayLoad userPayLoad) {
-        long userId = users.stream().max(Comparator.comparing(Users::getId)).map(Users::getId).orElse(0L);
+    public User createUser(UserPayLoad userPayLoad) {
 
 
-
-        Users user= new Users(userId+ 1, userPayLoad.getFirstName(),  userPayLoad.getLastName(), userPayLoad.getEmail(), userPayLoad.getPassword());
-            users.add(user);
+            User user= new User(userPayLoad.getId(), userPayLoad.getFirstName(),  userPayLoad.getLastName(), userPayLoad.getEmail(), userPayLoad.getPassword());
+            userRepository.save(user);
             return user;
+    }
+
+    @Override
+    public User updateUser(long userId, UserPayLoad userPayLoad) {
+        User user= userRepository.findById(userId);
+
+        user.setFirstName(userPayLoad.getFirstName());
+        user.setLastName(userPayLoad.getLastName());
+        user.setEmail(userPayLoad.getEmail());
+        user.setPassword(userPayLoad.getPassword());
+        return user;
+    }
+
+    @Override
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+
     }
 }

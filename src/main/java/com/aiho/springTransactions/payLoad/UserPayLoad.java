@@ -2,6 +2,7 @@ package com.aiho.springTransactions.payLoad;
 
 public class UserPayLoad {
 
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -45,5 +46,14 @@ public class UserPayLoad {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // TODO: to be removed later;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
