@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(long userId) {
-        return userRepository.findById(userId);
+        return userRepository.findById(userId).orElseThrow();
     }
 
     @Override
@@ -38,12 +38,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(long userId, UserPayLoad userPayLoad) {
-        User user= userRepository.findById(userId);
+        User user= userRepository.findById(userId).orElseThrow();
 
         user.setFirstName(userPayLoad.getFirstName());
         user.setLastName(userPayLoad.getLastName());
         user.setEmail(userPayLoad.getEmail());
         user.setPassword(userPayLoad.getPassword());
+
+        userRepository.save(user);
         return user;
     }
 

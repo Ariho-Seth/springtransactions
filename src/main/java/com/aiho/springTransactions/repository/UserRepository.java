@@ -1,15 +1,10 @@
 package com.aiho.springTransactions.repository;
 
 import com.aiho.springTransactions.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface UserRepository {
-    List<User> findAll();
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findById(long userId);
-
-    void save(User user);
-
-    void deleteById(long userId);
 }
